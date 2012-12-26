@@ -40,10 +40,23 @@
 			function resizeMap(e) {
 				/// <summary>Resizes the map and container to fill screen.</summary>
 				/// <param name="e" type="Event">Event object</param>
-				var screenHeight, titleHeight, newHeight;
+				var screenHeight, titleHeight, newHeight, mapContainer, padding;
+				
+
+				function getPaddingHeight() {
+					var pxRe = /^\d+(?=px)/, mapContainer = $("#mapContainer"), top, bottom;
+					top = mapContainer.css("padding-top").match(pxRe);
+					bottom = mapContainer.css("padding-bottom").match(pxRe);
+
+					return top && bottom ? Number(top[0]) + Number(bottom[0]) : null;
+				}
+
 				screenHeight = e ? e.target.innerHeight : $("html")[0].clientHeight;
 				titleHeight = $("#header")[0].clientHeight;
-				newHeight = screenHeight - titleHeight;
+				
+				padding = getPaddingHeight();
+
+				newHeight = screenHeight - titleHeight - padding;
 
 				$("#map").css("height", newHeight);
 
