@@ -14,17 +14,53 @@
 </head> 
 <body> 
 
-	<div data-role="page", id="page">
+	<div data-role="page" id="mainpage">
 
 		<div data-role="header" id="header">
 			<h1>Mobile Map</h1>
+			<a data-role="button" href="#settingspage" data-icon="gear" data-iconpos="notext">Layers</a>
 		</div><!-- /header -->
 
 		<div data-role="content" id="mapContainer">	
 			<div id="map"></div>
 		</div><!-- /content -->
 
-	</div><!-- /page -->
+	</div><!-- /map page -->
+
+	<div data-role="page" id="settingspage" data-theme="a">
+		<div data-role="header">
+			<h1>Settings</h1>
+			<a data-role="button" href="#mainpage" data-icon="home" data-iconpos="notext">Layers</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview">
+				<li><a href="#layerspage">Layers</a></li>
+				<li><a href="#basemappage">Basemap</a></li>
+			</ul>
+		</div>
+	</div> <!--/settings page-->
+
+	<div data-role="page" id="layerspage" data-theme="b">
+		<div data-role="header">
+			<h1>Layers</h1>
+			<a data-role="button" href="#mainpage" data-icon="home" data-iconpos="notext">Layers</a>
+		</div>
+		<div data-role="content">
+			Layer list will go here.
+		</div>
+	</div>
+
+	<div data-role="page" id="basemappage" data-theme="b">
+		<div data-role="header">
+			<h1>Basemap</h1>
+			<a data-role="button" href="#mainpage" data-icon="home" data-iconpos="notext">Layers</a>
+		</div>
+		<div data-role="content">
+			Basemap widget will go here.
+		</div>
+	</div>
+
+
 	<script src="Scripts/index.js"></script>
 </body>
 </html>
