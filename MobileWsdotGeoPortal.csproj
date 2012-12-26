@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="Scripts\index.js" />
+    <Content Include="Style\index.css" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />

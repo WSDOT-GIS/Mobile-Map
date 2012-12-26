@@ -4,94 +4,27 @@
 	<title>Mobile Map</title> 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-
 	<link href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.2/js/dojo/dijit/themes/claro/claro.css" rel="stylesheet" type="text/css" >
 	<link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.2/js/esri/css/esri.css" />
-	<script src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.2compact" type="text/javascript"></script>
-	<style>
-	html, body, #map, .map.container {
-		padding:0;
-		margin:0;
-		height:100%;
-		overflow-x: hidden;
-		overflow-y: hidden;
-	}
-	</style>
+	<link href="Style/index.css" rel="stylesheet" />
 
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<script src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.2compact" type="text/javascript"></script>
 </head> 
 <body> 
 
-<div data-role="page", id="page">
+	<div data-role="page", id="page">
 
-	<div data-role="header" id="header">
-		<h1>Mobile Map</h1>
-	</div><!-- /header -->
+		<div data-role="header" id="header">
+			<h1>Mobile Map</h1>
+		</div><!-- /header -->
 
-	<div data-role="content" id="mapContainer">	
-		<div id="map"></div>
-	</div><!-- /content -->
+		<div data-role="content" id="mapContainer">	
+			<div id="map"></div>
+		</div><!-- /content -->
 
-</div><!-- /page -->
-	<script>
-		require(["dojo/on", "esri/map"], function (on) {
-			"use strict";
-			var map, basemap;
-
-			function resizeMap(e) {
-				/// <summary>Resizes the map and container to fill screen.</summary>
-				/// <param name="e" type="Event">Event object</param>
-				var screenHeight, titleHeight, newHeight, mapContainer, padding;
-				
-
-				function getPaddingHeight() {
-					var pxRe = /^\d+(?=px)/, mapContainer = $("#mapContainer"), top, bottom;
-					top = mapContainer.css("padding-top").match(pxRe);
-					bottom = mapContainer.css("padding-bottom").match(pxRe);
-
-					return top && bottom ? Number(top[0]) + Number(bottom[0]) : null;
-				}
-
-				screenHeight = e ? e.target.innerHeight : $("html")[0].clientHeight;
-				titleHeight = $("#header")[0].clientHeight;
-				
-				padding = getPaddingHeight();
-
-				newHeight = screenHeight - titleHeight - padding;
-
-				$("#map").css("height", newHeight);
-
-				map.resize();
-			}
-
-			function moveToCurrentPosition(location) {
-				var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
-				map.centerAndZoom(pt, 16);
-			}
-
-			function handleLocationError(error) {
-				console.error(error);
-			}
-
-			map = new esri.Map("map");
-
-			////// TODO: for debugging, set map as a global variable.  Remove when moved to production.
-			////window.esriMap = map;
-
-			basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
-			map.addLayer(basemap);
-
-			on(window, "resize", resizeMap);
-
-			dojo.connect(map, "onLoad", function () {
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(moveToCurrentPosition, handleLocationError);
-				}
-				
-				resizeMap();
-			});
-		});
-	</script>
+	</div><!-- /page -->
+	<script src="Scripts/index.js"></script>
 </body>
 </html>
