@@ -50,6 +50,15 @@
 				map.resize();
 			}
 
+			function moveToCurrentPosition(location) {
+				var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
+				map.centerAndZoom(pt, 16);
+			}
+
+			function handleLocationError(error) {
+				console.error(error);
+			}
+
 			map = new esri.Map("map");
 
 			////// TODO: for debugging, set map as a global variable.  Remove when moved to production.
@@ -62,12 +71,7 @@
 
 			dojo.connect(map, "onLoad", function () {
 				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(function (location) {
-						var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
-						map.centerAndZoom(pt, 16);
-					}, function (error) {
-						console.error(error);
-					});
+					navigator.geolocation.getCurrentPosition(moveToCurrentPosition, handleLocationError);
 				}
 				
 				resizeMap();
