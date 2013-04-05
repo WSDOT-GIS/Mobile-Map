@@ -1,7 +1,7 @@
 ﻿/*global require, jQuery */
 (function ($) {
 	"use strict";
-	require(["dojo/on", "esri/map"], function (on) {
+	require(["dojo/on", "esri/map", "esri/geometry/webMercatorUtils", "esri/geometry/Point", "dojo/domReady!"], function (on, Map, webMercatorUtils, Point) {
 		var map, basemap;
 
 		function resizeMap(e) {
@@ -32,7 +32,7 @@
 		}
 
 		function moveToCurrentPosition(location) {
-			var pt = esri.geometry.geographicToWebMercator(new esri.geometry.Point(location.coords.longitude, location.coords.latitude));
+			var pt = webMercatorUtils.geographicToWebMercator(new Point(location.coords.longitude, location.coords.latitude));
 			map.centerAndZoom(pt, 16);
 		}
 
@@ -40,17 +40,16 @@
 			console.error(error);
 		}
 
-		map = new esri.Map("map");
+		map = new Map("map", {
+			basemap: "streets"
+		});
 
 		////// TODO: for debugging, set map as a global variable.  Remove when moved to production.
 		////window.esriMap = map;
 
-		basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
-		map.addLayer(basemap);
-
 		on(window, "resize", resizeMap);
 
-		dojo.connect(map, "onLoad", function () {
+		on(map, "load", function () {
 			resizeMap();
 
 			if (navigator.geolocation) {
